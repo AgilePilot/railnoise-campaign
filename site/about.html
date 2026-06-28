@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About / FAQ — Chiswick W4 Rail Noise Campaign</title>
+  <meta name="description" content="Learn about the Chiswick W4 Rail Noise Campaign and find answers to frequently asked questions.">
+  <link rel="canonical" href="https://noisytrains.org/about.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-container">
+      <a href="/" class="logo">NoisyTrains<span>.org</span></a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/sign.html">Sign the Petition</a></li>
+        <li><a href="/about.html" class="active">About / FAQ</a></li>
+        <li><a href="/updates.html">Updates</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page-content">
+    <div class="container">
+      <h1>About the Campaign</h1>
+      <p>The Chiswick W4 Rail Noise Campaign is a grassroots effort by residents affected by intense wheel-squeal noise from trains negotiating tight curves near Chiswick, West London. The high-pitched metallic screech penetrates homes day and night, disrupting sleep, concentration, and quality of life.</p>
+      <p>We are calling on Network Rail — which owns and maintains the track infrastructure — to assess noise levels, install proven mitigation measures (rail-dampers, rail-grinding, curve lubrication), and commit to a clear timeline for relief.</p>
+      <p>The campaign is organised by Chiswick W4 residents. We are not affiliated with any political party.</p>
+
+      <h2>Frequently Asked Questions</h2>
+
+      <details>
+        <summary>What is wheel-squeal?</summary>
+        <p>Wheel-squeal is a high-pitched noise caused by train wheels sliding laterally across the rail on tight curves. The steel-on-steel contact creates an intense screech that can exceed 100 dB — louder than a chainsaw at close range.</p>
+      </details>
+
+      <details>
+        <summary>Who is responsible for fixing this?</summary>
+        <p>Network Rail owns and maintains the track and is responsible for noise mitigation on its infrastructure. Train Operating Companies (TOCs) run the services but have limited control over track-generated noise.</p>
+      </details>
+
+      <details>
+        <summary>What solutions exist?</summary>
+        <p>Rail-dampers (tuned absorbers bolted to the rail), top-of-rail friction modifiers (curve lubrication), and regular rail-grinding are all proven, widely-used techniques. Many European railways deploy them as standard on tight curves near residential areas.</p>
+      </details>
+
+      <details>
+        <summary>Will my personal details be shared?</summary>
+        <p>Your name and postcode will be included in the formal petition submission to Network Rail and may be shared with local councillors. Your email, phone number, and full address are never shared. See our <a href="/privacy.html">Privacy Policy</a> for full details.</p>
+      </details>
+
+      <details>
+        <summary>Can I remove my signature later?</summary>
+        <p>Yes. The confirmation email you receive after signing includes a one-click "remove my data" link that permanently deletes your record from our database. You can also email us at <a href="mailto:chiswickw4railnoise@outlook.com">chiswickw4railnoise@outlook.com</a>.</p>
+      </details>
+
+      <details>
+        <summary>I don't live in W4 — can I still sign?</summary>
+        <p>Absolutely. Support from the wider community strengthens our case. Just select "I'm supporting from elsewhere" on the form.</p>
+      </details>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2024–2026 Chiswick W4 Rail Noise Campaign</p>
+      <nav class="footer-links">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

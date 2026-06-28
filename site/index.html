@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chiswick W4 Rail Noise Campaign — Stop the Squeal</title>
+  <meta name="description" content="Join hundreds of Chiswick residents demanding Network Rail fix the unbearable wheel-squeal noise. Sign the petition today.">
+  <meta property="og:title" content="Chiswick W4 Rail Noise Campaign — Stop the Squeal">
+  <meta property="og:description" content="Train wheel-squeal is ruining quality of life in Chiswick W4. Sign our petition to demand Network Rail take action.">
+  <meta property="og:url" content="https://noisytrains.org">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://noisytrains.org">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-container">
+      <a href="/" class="logo">NoisyTrains<span>.org</span></a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/" class="active">Home</a></li>
+        <li><a href="/sign.html">Sign the Petition</a></li>
+        <li><a href="/about.html">About / FAQ</a></li>
+        <li><a href="/updates.html">Updates</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Stop the Train Wheel&#8209;Squeal in Chiswick&nbsp;W4</h1>
+        <p class="hero-subtitle">An ear-splitting screech tears through our neighbourhood every time trains pass our houses. Hundreds of residents are affected. Network Rail must act.</p>
+        <div class="signature-counter" id="signature-counter">
+          <span class="counter-number" id="counter-number">—</span>
+          <span class="counter-label">signatures and counting</span>
+        </div>
+        <a href="/sign.html" class="btn btn-primary btn-lg">Sign the Petition</a>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <div class="container">
+        <h2>What's Happening?</h2>
+        <div class="info-grid">
+          <div class="info-card">
+            <h3>The Problem</h3>
+            <p>Trains running near Chiswick W4 produce intense wheel-squeal noise, a high-pitched metallic screech that penetrates walls and windows, disrupts sleep, and harms wellbeing.</p>
+          </div>
+          <div class="info-card">
+            <h3>Who's Responsible</h3>
+            <p>Network Rail owns and maintains the track infrastructure. Rail-dampers, rail-grinding, and lubrication systems are proven solutions used across Europe, but Network Rail has not installed them here.</p>
+          </div>
+          <div class="info-card">
+            <h3>What We Want</h3>
+            <p>We're calling on Network Rail to assess the noise levels, install proven mitigation measures, and commit to a timeline for relief. Our petition will be formally submitted with your signatures.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <h2>Add Your Voice</h2>
+        <p>Every signature strengthens our case. It takes 30 seconds.</p>
+        <a href="/sign.html" class="btn btn-primary">Sign Now</a>
+        <p class="small-text">Your data is handled in accordance with our <a href="/privacy.html">Privacy Policy</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2024–2026 Chiswick W4 Rail Noise Campaign</p>
+      <nav class="footer-links">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+
+    // Fetch live signature count
+    fetch('/api/count')
+      .then(r => r.json())
+      .then(data => {
+        const el = document.getElementById('counter-number');
+        if (data.count !== undefined) el.textContent = data.count.toLocaleString();
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>

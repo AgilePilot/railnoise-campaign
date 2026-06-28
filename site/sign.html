@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign the Petition — Chiswick W4 Rail Noise Campaign</title>
+  <meta name="description" content="Add your signature to demand Network Rail fix train wheel-squeal noise in Chiswick W4.">
+  <link rel="canonical" href="https://noisytrains.org/sign.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-container">
+      <a href="/" class="logo">NoisyTrains<span>.org</span></a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/sign.html" class="active">Sign the Petition</a></li>
+        <li><a href="/about.html">About / FAQ</a></li>
+        <li><a href="/updates.html">Updates</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="form-section">
+    <div class="container">
+      <h1>Sign the Petition</h1>
+      <p class="form-intro">Your signature will be included in a formal submission to Network Rail and may be shared with local councillors. Takes 30 seconds.</p>
+
+      <form class="petition-form" id="petition-form" novalidate>
+        <div class="form-group">
+          <label for="name">Full Name <span aria-hidden="true">*</span></label>
+          <input type="text" id="name" name="name" required autocomplete="name">
+          <div class="form-error">Please enter your full name.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email Address <span aria-hidden="true">*</span></label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+          <div class="form-error">Please enter a valid email address.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="postcode">Postcode <span aria-hidden="true">*</span></label>
+          <span class="hint">Used to show how many signatures come from each area — never displayed with your name.</span>
+          <input type="text" id="postcode" name="postcode" required autocomplete="postal-code" maxlength="10">
+          <div class="form-error">Please enter your postcode.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number <span style="font-weight:400;color:var(--color-text-muted)">(optional)</span></label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel">
+        </div>
+
+        <div class="form-group">
+          <label for="resident">Are you a Chiswick W4 resident?</label>
+          <select id="resident" name="resident">
+            <option value="yes">I live in Chiswick W4</option>
+            <option value="no">I'm supporting from elsewhere</option>
+          </select>
+        </div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="consent" name="consent" required>
+          <label for="consent">I consent to Chiswick W4 Rail Noise Campaign storing my details to count my signature, contact me with updates, and include my name and postcode in the formal submission to Network Rail and local councillors. See our <a href="/privacy.html" target="_blank">Privacy Policy</a>. <span aria-hidden="true">*</span></label>
+        </div>
+        <div class="form-error" id="consent-error" style="margin-top:-0.5rem;margin-bottom:1rem">You must tick the consent checkbox to sign.</div>
+
+        <div class="checkbox-group">
+          <input type="checkbox" id="whatsapp" name="whatsapp">
+          <label for="whatsapp">Also add me to the <a href="https://chat.whatsapp.com/CtduNFSHZ4z2ilXF31Vxfn" target="_blank" rel="noopener">WhatsApp group</a></label>
+        </div>
+
+        <div class="form-submit">
+          <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">Sign the Petition</button>
+        </div>
+
+        <div class="form-status" id="form-status"></div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2024–2026 Chiswick W4 Rail Noise Campaign</p>
+      <nav class="footer-links">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+
+    const form = document.getElementById('petition-form');
+    const statusEl = document.getElementById('form-status');
+    const submitBtn = document.getElementById('submit-btn');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      statusEl.className = 'form-status';
+      statusEl.style.display = 'none';
+
+      // Validate
+      let valid = true;
+      document.querySelectorAll('.form-group.has-error').forEach(g => g.classList.remove('has-error'));
+      document.getElementById('consent-error').style.display = 'none';
+
+      ['name', 'email', 'postcode'].forEach(id => {
+        const input = document.getElementById(id);
+        if (!input.value.trim() || (id === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value))) {
+          input.closest('.form-group').classList.add('has-error');
+          valid = false;
+        }
+      });
+
+      if (!document.getElementById('consent').checked) {
+        document.getElementById('consent-error').style.display = 'block';
+        valid = false;
+      }
+
+      if (!valid) return;
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting…';
+
+      try {
+        const res = await fetch('/api/sign', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: form.name.value.trim(),
+            email: form.email.value.trim(),
+            postcode: form.postcode.value.trim().toUpperCase(),
+            phone: form.phone.value.trim() || null,
+            resident: form.resident.value,
+            whatsapp: form.whatsapp.checked,
+          }),
+        });
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || 'Something went wrong. Please try again.');
+        }
+
+        window.location.href = '/thank-you.html';
+      } catch (err) {
+        statusEl.textContent = err.message;
+        statusEl.className = 'form-status error';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sign the Petition';
+      }
+    });
+  </script>
+</body>
+</html>

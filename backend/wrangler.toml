@@ -1,0 +1,14 @@
+name = "railnoise-api"
+main = "src/worker.js"
+compatibility_date = "2024-01-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "railnoise-db"
+database_id = "20a6d237-dc45-4fd5-b3ed-f8d3670a58ab"
+
+[vars]
+ADMIN_PASSWORD = "" # Set via: npx wrangler secret put ADMIN_PASSWORD
+CONFIRM_SECRET = "" # Set via: npx wrangler secret put CONFIRM_SECRET (used to sign confirmation/deletion tokens)
+SITE_URL = "https://noisytrains.org"
+FROM_EMAIL = "campaign@noisytrains.org"

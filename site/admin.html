@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Chiswick W4 Rail Noise Campaign</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .admin-login { max-width: 360px; margin: 3rem auto; text-align: center; }
+    .admin-login input { width: 100%; padding: 0.7rem; margin: 0.5rem 0; border: 1px solid var(--color-border); border-radius: var(--radius); font-size: 1rem; }
+    .admin-panel { padding: 2rem 1rem; }
+    .stat-bar { display: flex; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .stat { font-size: 2rem; font-weight: 800; }
+    .stat small { display: block; font-size: 0.85rem; font-weight: 400; color: var(--color-text-muted); }
+    table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    th, td { text-align: left; padding: 0.5rem; border-bottom: 1px solid var(--color-border); }
+    th { background: #f5f5f3; position: sticky; top: 0; }
+    .actions { margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-container">
+      <a href="/" class="logo">NoisyTrains<span>.org</span></a>
+    </nav>
+  </header>
+
+  <div class="admin-login" id="login-form">
+    <h1>Admin Access</h1>
+    <input type="password" id="password" placeholder="Password" autofocus>
+    <button class="btn btn-primary" onclick="login()" style="width:100%;margin-top:0.5rem">Log In</button>
+    <p class="form-status" id="login-error"></p>
+  </div>
+
+  <div class="admin-panel hidden" id="admin-panel">
+    <div class="container">
+      <h1>Campaign Admin</h1>
+      <div class="stat-bar">
+        <div><span class="stat" id="total-confirmed">—</span><small>Confirmed signatures</small></div>
+        <div><span class="stat" id="total-all">—</span><small>Total (incl. unconfirmed)</small></div>
+      </div>
+      <div class="actions">
+        <a href="/api/admin/export" id="export-link" class="btn btn-secondary">Export CSV</a>
+        <button class="btn btn-primary" onclick="loadSignatures()">Refresh</button>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Postcode</th><th>Phone</th><th>Resident</th><th>Confirmed</th><th>Signed</th></tr>
+          </thead>
+          <tbody id="sig-table"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let authHeader = '';
+
+    function login() {
+      const pw = document.getElementById('password').value;
+      authHeader = 'Basic ' + btoa('admin:' + pw);
+      loadSignatures();
+    }
+
+    document.getElementById('password').addEventListener('keydown', e => {
+      if (e.key === 'Enter') login();
+    });
+
+    async function loadSignatures() {
+      try {
+        const res = await fetch('/api/admin/signatures', {
+          headers: { 'Authorization': authHeader }
+        });
+        if (res.status === 401) {
+          document.getElementById('login-error').textContent = 'Incorrect password.';
+          document.getElementById('login-error').className = 'form-status error';
+          return;
+        }
+        const data = await res.json();
+        document.getElementById('login-form').classList.add('hidden');
+        document.getElementById('admin-panel').classList.remove('hidden');
+        document.getElementById('total-confirmed').textContent = data.total_confirmed;
+        document.getElementById('total-all').textContent = data.signatures.length;
+
+        // Set export link auth via URL (Basic auth in URL)
+        const exportUrl = new URL('/api/admin/export', location.origin);
+        document.getElementById('export-link').href = exportUrl.toString();
+        document.getElementById('export-link').onclick = async function(e) {
+          e.preventDefault();
+          const r = await fetch('/api/admin/export', { headers: { 'Authorization': authHeader } });
+          const blob = await r.blob();
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = 'signatures.csv';
+          a.click();
+        };
+
+        const tbody = document.getElementById('sig-table');
+        tbody.innerHTML = data.signatures.map(s => `
+          <tr>
+            <td>${esc(s.name)}</td>
+            <td>${esc(s.email)}</td>
+            <td>${esc(s.postcode)}</td>
+            <td>${esc(s.phone || '—')}</td>
+            <td>${s.resident}</td>
+            <td>${s.confirmed ? 'Yes' : 'No'}</td>
+            <td>${s.created_at}</td>
+          </tr>
+        `).join('');
+      } catch (e) {
+        document.getElementById('login-error').textContent = 'Connection error.';
+        document.getElementById('login-error').className = 'form-status error';
+      }
+    }
+
+    function esc(s) {
+      const d = document.createElement('div');
+      d.textContent = s;
+      return d.innerHTML;
+    }
+  </script>
+</body>
+</html>

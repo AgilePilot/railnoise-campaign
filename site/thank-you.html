@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You — Chiswick W4 Rail Noise Campaign</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-container">
+      <a href="/" class="logo">NoisyTrains<span>.org</span></a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/sign.html">Sign the Petition</a></li>
+        <li><a href="/about.html">About / FAQ</a></li>
+        <li><a href="/updates.html">Updates</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="thankyou-section">
+    <div class="container">
+      <h1>Thank You for Signing!</h1>
+      <p>We've sent a confirmation email to the address you provided. Please click the link in that email to confirm your signature.</p>
+      <p>Now help us spread the word — every share brings us closer to the noise relief Chiswick deserves.</p>
+
+      <div class="share-buttons">
+        <a class="share-btn whatsapp" href="https://wa.me/?text=I%20just%20signed%20the%20petition%20to%20stop%20train%20wheel-squeal%20in%20Chiswick%20W4.%20Add%20your%20voice%3A%20https%3A%2F%2Fnoisytrains.org" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="share-btn email" href="mailto:?subject=Stop%20train%20noise%20in%20Chiswick%20W4&body=I%20just%20signed%20the%20petition%20to%20stop%20train%20wheel-squeal%20in%20Chiswick%20W4.%20Add%20your%20voice%3A%20https%3A%2F%2Fnoisytrains.org" target="_blank">Email</a>
+        <a class="share-btn x" href="https://twitter.com/intent/tweet?text=I%20just%20signed%20the%20petition%20to%20stop%20train%20wheel-squeal%20in%20Chiswick%20W4.%20Add%20your%20voice%3A%20https%3A%2F%2Fnoisytrains.org" target="_blank" rel="noopener">X / Twitter</a>
+        <a class="share-btn facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fnoisytrains.org" target="_blank" rel="noopener">Facebook</a>
+      </div>
+
+      <p style="margin-top:2rem">
+        <a href="https://chat.whatsapp.com/CtduNFSHZ4z2ilXF31Vxfn" target="_blank" rel="noopener" class="btn btn-secondary">Join the WhatsApp Group</a>
+      </p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2024–2026 Chiswick W4 Rail Noise Campaign</p>
+      <nav class="footer-links">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+  </script>
+</body>
+</html>

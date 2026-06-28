@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Updates — Chiswick W4 Rail Noise Campaign</title>
+  <link rel="canonical" href="https://noisytrains.org/updates.html">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav-container">
+      <a href="/" class="logo">NoisyTrains<span>.org</span></a>
+      <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/sign.html">Sign the Petition</a></li>
+        <li><a href="/about.html">About / FAQ</a></li>
+        <li><a href="/updates.html" class="active">Updates</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page-content">
+    <div class="container">
+      <h1>Campaign Updates</h1>
+
+      <div class="signature-counter" style="margin-bottom:2rem;background:var(--color-primary);color:#fff;display:inline-flex;">
+        <span class="counter-number" id="counter-number">—</span>
+        <span class="counter-label">signatures so far</span>
+      </div>
+
+      <div class="update-card">
+        <div class="update-date">26 June 2026</div>
+        <h3>Campaign Launched</h3>
+        <p>We've launched the Chiswick W4 Rail Noise Campaign and petition at <a href="https://noisytrains.org">noisytrains.org</a>. Please sign and share with your neighbours — every signature strengthens our case when we formally submit to Network Rail.</p>
+      </div>
+
+      <p style="color:var(--color-text-muted);margin-top:1rem;">Check back here for news on our submission to Network Rail, any responses received, and next steps for the campaign.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2024–2026 Chiswick W4 Rail Noise Campaign</p>
+      <nav class="footer-links">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+      const expanded = this.getAttribute('aria-expanded') === 'true';
+      this.setAttribute('aria-expanded', !expanded);
+      document.querySelector('.nav-links').classList.toggle('open');
+    });
+    fetch('/api/count')
+      .then(r => r.json())
+      .then(data => {
+        const el = document.getElementById('counter-number');
+        if (data.count !== undefined) el.textContent = data.count.toLocaleString();
+      })
+      .catch(() => {});
+  </script>
+</body>
+</html>
